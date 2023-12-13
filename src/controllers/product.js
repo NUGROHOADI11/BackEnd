@@ -119,6 +119,11 @@ controller.post = async function (req, res) {
     try {
         const { productName, description, price, stockQuantity, RenterUserId } =
             req.body;
+        var imageUrl = "";
+
+        if (req.file && req.file.cloudStoragePublicUrl) {
+            imageUrl = req.file.cloudStoragePublicUrl;
+        }
         const renter = await model.User.findByPk(RenterUserId);
         if (!renter) {
             return res
@@ -132,7 +137,7 @@ controller.post = async function (req, res) {
             Price: price,
             StockQuantity: stockQuantity,
             RenterUserId: RenterUserId,
-            // ProductImageURL: null,
+            ProductImageURL: imageUrl,
         });
 
         res.json({

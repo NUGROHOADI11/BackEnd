@@ -3,12 +3,25 @@ const router = express.Router();
 const db = require("../config/database/db");
 const controller = require("../controllers/index");
 const authMiddleware = require("../middleware/auth");
+const Multer = require("multer");
+const imgUpload = require("../middleware/upload_gcp");
 
-router.patch("/:productId", controller.product.updateProduct);
+const multer = Multer({
+    storage: Multer.MemoryStorage,
+    fileSize: 5 * 1024 * 1024,
+});
+
 router.get("/", controller.product.getAllProduct);
 router.get("/search", controller.product.search);
 router.get("/:productId", authMiddleware, controller.product.getOne);
-router.post("/", authMiddleware, controller.product.post);
+router.post(
+    "/",
+    authMiddleware,
+    multer.single("uploadimage"),
+    imgUpload.uploadToGcs,
+    controller.product.post
+);
+router.patch("/:productId", controller.product.updateProduct);
 router.delete("/:productId", authMiddleware, controller.product.delete);
 
 module.exports = router;
