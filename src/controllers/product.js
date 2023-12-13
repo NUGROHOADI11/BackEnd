@@ -76,6 +76,45 @@ controller.search = async function (req, res) {
     }
 };
 
+controller.updateProduct = async (req, res) => {
+    try {
+        const { productId } = req.params;
+        const { productName, description, price, stockQuantity } = req.body;
+
+        const product = await model.Product.findByPk(productId);
+
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found",
+            });
+        }
+
+        product.ProductName =
+            productName !== undefined ? productName : product.ProductName;
+        product.Description =
+            description !== undefined ? description : product.Description;
+        product.Price = price !== undefined ? price : product.Price;
+        product.StockQuantity =
+            stockQuantity !== undefined ? stockQuantity : product.StockQuantity;
+
+        await product.save();
+
+        res.json({
+            success: true,
+            message: "Product updated successfully",
+            data: product,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+            error: error.message,
+        });
+    }
+};
+
 controller.post = async function (req, res) {
     try {
         const { productName, description, price, stockQuantity, RenterUserId } =
@@ -107,8 +146,6 @@ controller.post = async function (req, res) {
         });
     }
 };
-
-
 
 controller.delete = async function (req, res) {
     try {
