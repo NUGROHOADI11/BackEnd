@@ -12,8 +12,9 @@ const multer = Multer({
 });
 
 router.get("/", controller.product.getAllProduct);
-router.get("/search", controller.product.search);
+router.get("/search",authMiddleware, controller.product.search);
 router.get("/:productId", authMiddleware, controller.product.getOne);
+router.get("/user/:userId",authMiddleware, controller.product.getProductByUserId);
 router.post(
     "/",
     authMiddleware,
@@ -21,7 +22,7 @@ router.post(
     imgUpload.uploadToGcs,
     controller.product.post
 );
-router.patch("/:productId", controller.product.updateProduct);
+router.patch("/:productId",authMiddleware, controller.product.updateProduct);
 router.delete("/:productId", authMiddleware, controller.product.delete);
 
 module.exports = router;

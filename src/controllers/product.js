@@ -45,6 +45,39 @@ controller.getOne = async function (req, res) {
     }
 };
 
+controller.getProductByUserId = async function (req, res) {
+    try {
+        const { userId } = req.params;
+
+        try {
+            const product = await model.Product.findAll({
+                where: {
+                    RenterUserId: userId,
+                },
+            });
+
+            if (!product) {
+                return res
+                    .status(404)
+                    .json({ success: false, message: "Product not found" });
+            }
+
+            res.json({ success: true, data: product });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                success: false,
+                message: "Internal server error",
+            });
+        }
+    } catch (error) {
+        res.status(400).json({
+            message: "users not found",
+            data: e,
+        });
+    }
+};
+
 controller.search = async function (req, res) {
     try {
         const search = req.query.keyword;
