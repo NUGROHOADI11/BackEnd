@@ -13,18 +13,17 @@ const HTTP_STATUS = {
 
 const controller = {};
 
-controller.getAll = async (req, res) => {
+controller.getAll = async function (req, res) {
   try {
-    const users = await model.User.findAll();
-    const response = users.length > 0
-      ? { message: "Get method users", data: users }
-      : { message: "Users not found", data: users };
-    res.status(HTTP_STATUS.OK).json(response);
+      const products = await model.User.findAll();
+
+      res.json({ success: true, data: products });
   } catch (e) {
-    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
-      message: "Internal server error",
-      data: e,
-    });
+      console.error(e);
+      res.status(500).json({
+          success: false,
+          message: "Internal server error",
+      });
   }
 };
 
