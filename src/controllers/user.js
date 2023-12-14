@@ -156,7 +156,7 @@ controller.editDataUser = async (req, res) => {
         user.FullName = FullName || user.FullName;
         user.Address = Address || user.Address;
         user.Phone = Phone || user.Phone;
-        user.ProfilePhotoURL = imageUrl || user.ProfilePhotoURL;
+        user.ProfilePhotoURL = imageUrl ;
 
         await user.save();
 
@@ -193,6 +193,10 @@ controller.delete = async function deleteUser(req, res) {
                 .json({ success: false, message: "User not found" });
         }
 
+        await model.Order.destroy({ where: { RenterId: userId } });
+        // await model.OrderItem.destroy({ where: { ProductId: productId } });
+        await model.Product.destroy({ where: { RenterUserId: userId } });
+        // await model.Favorite.destroy({ where: { ProductId: productId } });
         await user.destroy();
 
         res.json({ success: true, message: "User deleted successfully" });

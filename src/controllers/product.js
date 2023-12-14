@@ -195,6 +195,8 @@ controller.delete = async function (req, res) {
                 .json({ success: false, message: "Product not found" });
         }
 
+        await model.OrderItem.destroy({ where: { ProductId: productId } });
+        await model.Favorite.destroy({ where: { ProductId: productId } });
         await product.destroy();
 
         res.json({ success: true, message: "Product deleted successfully" });
