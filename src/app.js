@@ -17,6 +17,10 @@ app.use("/user", userRoute);
 app.use("/product", productRoute);
 app.use("/order", orderRoute);
 app.use("/favorite", favRoute);
+app.get("/", (req, res) => {
+    console.log("Response success")
+    res.send("Response Success!")
+})
 app.use((req, res, next) => {
     const error = new Error("not found");
     error.status = 404;
