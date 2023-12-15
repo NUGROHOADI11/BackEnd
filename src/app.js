@@ -1,4 +1,3 @@
-require('@google-cloud/debug-agent').start()
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
