@@ -4,7 +4,7 @@ const User = require("./user");
 const OrderItem = require("./orderItem");
 
 const Order = db.define(
-    "Orders",
+    "orders",
     {
         OrderDate: {
             type: Sequelize.DATE,

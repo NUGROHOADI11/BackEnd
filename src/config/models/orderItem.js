@@ -3,7 +3,7 @@ const db = require("../database/db");
 const Product = require("./product");
 
 const OrderItem = db.define(
-    "OrderItems",
+    "orderitems",
     {
         Quantity: {
             type: DataTypes.INTEGER,
