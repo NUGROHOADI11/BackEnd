@@ -7,11 +7,11 @@ const path = require("path");
 const pathKey = path.resolve(__dirname, "../../serviceaccountkey.json");
 
 const gcs = new Storage({
-    projectId: "bebas-407911",
+    projectId: "project_id_anda",
     keyFilename: pathKey,
 });
 
-const bucketName = "profile_photo_image";
+const bucketName = "bucket_name_anda";
 const bucket = gcs.bucket(bucketName);
 
 function formatDate(date) {
