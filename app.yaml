@@ -1,2 +1,2 @@
-runtime: node20
+runtime: nodejs20
 service: backend
